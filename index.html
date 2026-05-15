@@ -32,6 +32,58 @@
         h1 { font-family: Georgia, 'Times New Roman', serif; font-size: 42px; color: #000; margin: 0 0 8px 0; font-weight: 500; line-height: 1.2; letter-spacing: -0.5px; }
         .divider { width: 60px; height: 1px; background: #000; margin: 30px 0 40px 0; }
 
+        .study-announcement {
+            background: #000;
+            color: #fff;
+            padding: 44px 50px;
+            margin: 40px 0 60px 0;
+            border: 1px solid #000;
+        }
+        .announcement-label {
+            font-family: 'Courier New', monospace;
+            font-size: 10px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: #fff;
+            opacity: 0.7;
+            margin-bottom: 18px;
+        }
+        .announcement-title {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 32px;
+            font-weight: 500;
+            margin: 0 0 18px 0;
+            color: #fff;
+            letter-spacing: -0.3px;
+            line-height: 1.2;
+        }
+        .announcement-body {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.75;
+            color: #fff;
+            opacity: 0.88;
+            max-width: 600px;
+            margin: 0 0 30px 0;
+        }
+        .announcement-cta {
+            display: inline-block;
+            padding: 14px 28px;
+            border: 1px solid #fff;
+            color: #fff;
+            background: transparent;
+            text-decoration: none;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            transition: background 0.2s, color 0.2s;
+        }
+        .announcement-cta:hover {
+            background: #fff;
+            color: #000;
+        }
+
         .status-box {
             background: transparent;
             border: none;
@@ -188,6 +240,10 @@
             .audio-warning { padding: 15px 20px; font-size: 11px; }
             .data-table td:first-child { font-size: 10px; width: 120px; }
             .data-table td:last-child { font-size: 16px; }
+            .study-announcement { padding: 32px 24px; margin: 30px 0 50px 0; }
+            .announcement-title { font-size: 24px; }
+            .announcement-body { font-size: 13px; }
+            .announcement-cta { padding: 12px 22px; font-size: 11px; }
             .footer { padding: 30px 20px; font-size: 10px; }
         }
     </style>
@@ -218,8 +274,17 @@
             <h1>Audiovisual Stimulus Response Study</h1>
             <div class="divider"></div>
 
+            <div class="study-announcement">
+                <div class="announcement-label">▸ Now Accepting Submissions</div>
+                <div class="announcement-title">Study II — Affective Ordering</div>
+                <div class="announcement-body">
+                    A second study is open. Subjects are invited to view five new artefacts and arrange them along the affective continuum, from the most euphoric to the most grief-bearing. The institute requests your ordering.
+                </div>
+                <a href="/study-2.html" class="announcement-cta">Enter the Study →</a>
+            </div>
+
             <div class="status-box">
-                <div class="status-label">Study Status</div>
+                <div class="status-label">Study I — Status</div>
                 <div class="status-display">CLOSED</div>
             </div>
 
