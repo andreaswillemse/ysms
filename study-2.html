@@ -172,6 +172,23 @@
         .rank-btn:hover:not(:disabled) { background: #000; color: #fff; }
         .rank-btn:disabled { opacity: 0.25; cursor: not-allowed; }
 
+        @keyframes rank-flash-bg {
+            0%   { background: #000; }
+            100% { background: transparent; }
+        }
+        @keyframes rank-flash-text {
+            0%   { color: #fff; }
+            100% { color: #000; }
+        }
+        .rank-row.flash { animation: rank-flash-bg 600ms ease-out; }
+        .rank-row.flash .rank-pos,
+        .rank-row.flash .rank-label { animation: rank-flash-text 600ms ease-out; }
+        @media (prefers-reduced-motion: reduce) {
+            .rank-row.flash,
+            .rank-row.flash .rank-pos,
+            .rank-row.flash .rank-label { animation: none; }
+        }
+
         .remark-area {
             width: 100%;
             min-height: 120px;
@@ -456,8 +473,14 @@
         let order = shuffle(ARTEFACTS);
         let submitted = false;
 
-        function render() {
+        function render(movedCode) {
             const list = document.getElementById('rankList');
+
+            const firstPos = {};
+            list.querySelectorAll('.rank-row').forEach(row => {
+                firstPos[row.dataset.code] = row.getBoundingClientRect().top;
+            });
+
             list.innerHTML = '';
             order.forEach((item, idx) => {
                 const li = document.createElement('li');
@@ -499,13 +522,39 @@
                 li.appendChild(controls);
                 list.appendChild(li);
             });
+
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (!reduceMotion) {
+                list.querySelectorAll('.rank-row').forEach(row => {
+                    const code = row.dataset.code;
+                    if (firstPos[code] === undefined) return;
+                    const delta = firstPos[code] - row.getBoundingClientRect().top;
+                    if (delta === 0) return;
+                    row.style.transition = 'none';
+                    row.style.transform = 'translateY(' + delta + 'px)';
+                    requestAnimationFrame(() => {
+                        row.style.transition = 'transform 360ms cubic-bezier(0.2, 0.8, 0.2, 1)';
+                        row.style.transform = '';
+                    });
+                });
+            }
+
+            if (movedCode) {
+                const movedRow = list.querySelector('[data-code="' + movedCode + '"]');
+                if (movedRow) {
+                    movedRow.classList.remove('flash');
+                    void movedRow.offsetWidth;
+                    movedRow.classList.add('flash');
+                }
+            }
         }
 
         function move(idx, dir) {
             const newIdx = idx + dir;
             if (newIdx < 0 || newIdx >= order.length) return;
+            const movedCode = order[idx].code;
             [order[idx], order[newIdx]] = [order[newIdx], order[idx]];
-            render();
+            render(movedCode);
         }
 
         const remark = document.getElementById('remark');
